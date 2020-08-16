@@ -58,7 +58,32 @@ namespace WebEncryption.Models
             }
             return result;
         }
+        private static List<string> Caesar(string message, bool isEncrypt)
+        {
+            List<string> result = new List<string>();
+            for (int i = 0; i < alphabet.Length; i++)
+            {
+                result.Add(string.Empty);
+                for (int j = 0; j < message.Length; j++)
+                {
+                    int letterId = alphabet.IndexOf(message.ToUpper()[j]);
+                    if (letterId < 0)
+                    {
+                        result[i] += message[j];
+                    }
+                    else
+                    {
+                        char letter = alphabet[(alphabet.Length + letterId + (isEncrypt ? 1 : -1) * i) % alphabet.Length];
+                        result[i] += char.IsUpper(message[j]) ? letter.ToString() : letter.ToString().ToLower();
+                    }
+                }
+            }
+            return result;
+        }
         public static string VigenereEncrypt(string message, string key) => Vigenere(message, key, true);
         public static string VigenereDecrypt(string message, string key) => Vigenere(message, key, false);
+        public static List<string> CaesarEncrypt(string message) => Caesar(message, true);
+        public static List<string> CaesarDecrypt(string message) => Caesar(message, false);
+
     }
 }

@@ -1,0 +1,15 @@
+﻿@{
+    ViewData["Title"] = "Результат";
+}
+@model List<string>
+
+<h4 class="display-4">Результат</h4>
+<table class="table table-striped">
+    @for (int i = 0; i < Model.Count; i++)
+    {
+        <tr>
+            <th>Смещение на @(i * (((bool)ViewData["isEncrypt"]) ? 1 : -1)) </th>
+            <td>@Model[i]</td>
+        </tr>
+    }
+</table>
