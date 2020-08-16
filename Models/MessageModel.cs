@@ -9,55 +9,56 @@ namespace WebEncryption.Models
     public class MessageModel
     {
         private const string alphabet = "АБВГДЕЁЖЗИЙКЛМНОПРСТУФХЦЧШЩЪЫЬЭЮЯ";
-        private string key;
+        /*private string key;
         public string Key
         {
             get { return key; }
             set { key = value.ToUpper(); }
         }
         public string Message { get; set; }
-        public string Path { get; set; }
+        public string Path { get; set; }*/
 
-        private string GetRepeatKey()
+        private static string GetRepeatKey(string key, string message)
         {
             int k = 0;
             string repeatKey = string.Empty;
-            for (int i = 0; i < Message.Length; i++)
+            for (int i = 0; i < message.Length; i++)
             {
-                if (alphabet.Contains(Message.ToUpper()[i]))
+                if (alphabet.Contains(message.ToUpper()[i]))
                 {
-                    repeatKey += Key[k];
+                    repeatKey += key[k];
                     k++;
-                    if (k == Key.Length)
+                    if (k == key.Length)
                         k = 0;
                 }
                 else
-                    repeatKey += Message[i];
+                    repeatKey += message[i];
             }
             return repeatKey;
         }
-        private void Vigenere(bool isEncrypt)
+        private static string Vigenere(string message, string key, bool isEncrypt)
         {
-            string keyRepeat = GetRepeatKey();
+            key = key.ToUpper();
+            string keyRepeat = GetRepeatKey(key, message);
             string result = string.Empty;
 
-            for (int i = 0; i < Message.Length; i++)
+            for (int i = 0; i < message.Length; i++)
             {
-                int letterId = alphabet.IndexOf(Message.ToUpper()[i]);
+                int letterId = alphabet.IndexOf(message.ToUpper()[i]);
                 int keyId = alphabet.IndexOf(keyRepeat[i]);
                 if (letterId < 0)
                 {
-                    result += Message[i];
+                    result += message[i];
                 }
                 else
                 {
                     char letter = alphabet[(alphabet.Length + letterId + (isEncrypt ? 1 : -1) * keyId) % alphabet.Length];
-                    result += char.IsUpper(Message[i]) ? letter.ToString() : letter.ToString().ToLower();
+                    result += char.IsUpper(message[i]) ? letter.ToString() : letter.ToString().ToLower();
                 }
             }
-            Message = result;
+            return result;
         }
-        public void VigenereEncrypt() => Vigenere(true);
-        public void VigenereDecrypt() => Vigenere(false);
+        public static string VigenereEncrypt(string message, string key) => Vigenere(message, key, true);
+        public static string VigenereDecrypt(string message, string key) => Vigenere(message, key, false);
     }
 }
