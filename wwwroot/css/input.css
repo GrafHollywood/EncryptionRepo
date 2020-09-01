@@ -1,0 +1,8 @@
+﻿body {
+}
+.input {
+    border-radius: 10px;
+    border: 1px solid cornflowerblue;
+    box-shadow: 0 0 5px cornflowerblue;
+    margin-top: 10px;
+}

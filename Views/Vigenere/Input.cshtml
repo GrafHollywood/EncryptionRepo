@@ -6,11 +6,11 @@
 <form asp-controller="Vigenere" method="post">
     <p>
         <b>Ключ:</b> <br />
-        <input type="text" name="key" required />
+        <input type="text" name="key" required  class="input"/>
     </p>
     <p>
         <b>Текст, который необходимо зашифровать:</b> <br />
-        <textarea name="message" rows="10" cols="100"></textarea>
+        <textarea name="message" rows="10" cols="100" class="input"></textarea>
     </p>
     <input type="submit" value="Зашифровать" asp-action="Encrypt"/>
     <input type="submit" value="Расшифровать" asp-action="Decrypt"/>
